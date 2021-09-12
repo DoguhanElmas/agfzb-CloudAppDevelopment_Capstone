@@ -36,7 +36,7 @@ def login_request(request):
         if user is not None:
             login(request, user)
             print(user)
-            return redirect('login/')
+            return redirect('djangoapp:index')
         else:           
             return render(request, 'djangoapp/index.html', context)
     else:
@@ -45,7 +45,7 @@ def login_request(request):
 def logout_request(request):
     print("Log out the user `{}`".format(request.user.username))
     logout(request)
-    return redirect('djangoapp/index.html')
+    return redirect('djangoapp:index')
 
 def registration_request(request):
     context = {}
@@ -74,7 +74,7 @@ def registration_request(request):
                                             password=password)
             # Login the user and redirect to course list page
             login(request, user)
-            return redirect("djangoapp")
+            return redirect("djangoapp:index")
         else:
             return render(request, 'djangoapp/user_registration.html', context)
 # Update the `get_dealerships` view to render the index page with a list of dealerships
