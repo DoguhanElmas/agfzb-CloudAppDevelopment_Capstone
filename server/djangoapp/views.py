@@ -103,7 +103,7 @@ def add_review(request, dealer_id):
         url = "https://3df11349.eu-gb.apigw.appdomain.cloud/api/dealership?dealerId={0}".format(dealersid)
         # Get dealers from the URL
         context = {
-            "cars": models.CarModel.objects.all().filter(dealer_id = dealersid),
+            "cars": models.CarModel.objects.all().filter(dealerId = dealersid),
             "dealers": restapis.get_dealers_from_cf(url),
         }
         return render(request, 'djangoapp/add_review.html', context)
