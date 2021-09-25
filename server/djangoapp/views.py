@@ -124,7 +124,7 @@ def add_review(request, dealer_id):
                 review["car_year"]= car.year.strftime("%Y")
             json_payload = {"review": review}
             print (json_payload)
-            url = "https://3df11349.eu-gb.apigw.appdomain.cloud/api/submit-review"
+            url = "https://3df11349.eu-gb.apigw.appdomain.cloud/api/review"
             restapis.post_request(url, json_payload, dealerId=dealer_id)
             return redirect("djangoapp:dealer_details", dealer_id=dealer_id)
         else:
