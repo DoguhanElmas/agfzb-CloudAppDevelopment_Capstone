@@ -82,7 +82,7 @@ def registration_request(request):
 def get_dealerships(request):
     context = {}
     if request.method == "GET":
-        url = 'https://3df11349.eu-gb.apigw.appdomain.cloud/api/dealerships'
+        url = 'https://3df11349.eu-gb.apigw.appdomain.cloud/api/dealership'
         # Get dealers from the URL
         context = {"dealerships": restapis.get_dealers_from_cf(url)}
         # Concat all dealer's short name
