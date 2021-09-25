@@ -98,34 +98,40 @@ def get_dealer_details(request, dealer_id):
         return render(request, 'djangoapp/dealer_details.html', context)
 
 def add_review(request, dealer_id):
+    print("request",request)
+    print("dealerıd",dealer_id)
     if request.method == "GET":
         dealersid = dealer_id
-        url = "https://3df11349.eu-gb.apigw.appdomain.cloud/api/dealership?dealerId={0}".format(dealersid)
+        # url = "https://3df11349.eu-gb.apigw.appdomain.cloud/api/dealership?dealerId={0}".format(dealersid)
+        # print("url",url)
         # Get dealers from the URL
         context = {
             "cars": models.CarModel.objects.all().filter(dealerid = dealersid),
-            "dealers": restapis.get_dealers_from_cf(url),
+            "dealerId":dealersid
         }
         return render(request, 'djangoapp/add_review.html', context)
     if request.method == "POST":
         if request.user.is_authenticated:
             form = request.POST
             review = {
-                "name": "{request.user.first_name} {request.user.last_name}",
-                "dealership": dealer_id,
+                "name": "asdf",
+                "dealership": int(dealer_id),
                 "review": form["content"],
                 "purchase": form.get("purchasecheck"),
                 }
             if form.get("purchasecheck"):
-                review["purchase_date"] = datetime.strptime(form.get("purchasedate"), "%m/%d/%Y").isoformat()
+                # review["purchase_date"] = datetime.strptime(form.get("purchasedate"), "%m/%d/%Y").isoformat()
+                review["purchase_date"] = '12/12/2021'
                 car = models.CarModel.objects.get(pk=form["car"])
                 review["car_make"] = car.carmake.name
                 review["car_model"] = car.name
-                review["car_year"]= car.year.strftime("%Y")
+                review["car_year"]= int(car.year.strftime("%Y"))
             json_payload = {"review": review}
-            print (json_payload)
-            url = "https://3df11349.eu-gb.apigw.appdomain.cloud/api/review"
-            restapis.post_request(url, json_payload, dealerId=dealer_id)
+            print("------------")
+            print ("127",json_payload)
+            print("------------")
+            url = "https://3df11349.eu-gb.apigw.appdomain.cloud/api/submit"
+            restapis.post_request(url, json_payload)
             return redirect("djangoapp:dealer_details", dealer_id=dealer_id)
         else:
             return redirect("/djangoapp/login")

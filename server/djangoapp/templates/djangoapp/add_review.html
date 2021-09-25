@@ -44,10 +44,9 @@
     <!--Add review form here -->
     <main class="container">
     <!--Add review form here -->
-    {% for dealer in dealers %}
-        <form action="/djangoapp/dealer/{{dealer.id}}/add_review/" method="post">
+        <form action="/djangoapp/dealer/{{dealerId}}/add_review/" method="post">
             {% csrf_token %}
-    {% endfor %}
+   
             <div class="form-group">
                 <label for="content">Enter the review content:</label>
                 <textarea class="form-control" id="content" name="content" rows="2" required></textarea>
@@ -73,7 +72,7 @@
     </main>
     </body>
       <script type="text/javascript">
-      $('.date-own').datepicker({
+      $('.purchasedate').datepicker({
          format: 'mm/dd/yyyy'
        });
  </script>
